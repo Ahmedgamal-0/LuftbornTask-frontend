@@ -1,10 +1,41 @@
-<div class="product-list">
-    @for(product of products;track product.id){
-    <div  class="product-card">
-      <h2>{{ product.name }}</h2>
-      <p>{{ product.description }}</p>
-      <p><strong>Price:</strong> ${{ product.price }}</p>
-      <a [href]="product.productUrl" target="_blank">View Product</a>
-    </div>
+<div class="row my-4 justify-content-center">
+  <input
+    class="col-6 form-text"
+    placeholder="Search By Name"
+    (change)="getAllProducts($event)"
+  />
+  <a routerLink="/add-product" class="bg-primary btn text-white mx-2 col-1">
+    Add Product
+  </a>
+</div>
+@if(messageForDelete){
+<p>{{ messageForDelete }}</p>
 }
+<div class="row d-flex justify-content-center align-items-center">
+  @for(product of products; track product.id) {
+  <div class="card m-4 col-4">
+    <div class="card-body p-4">
+      <h3>{{ product.name }}</h3>
+      <p>{{ product.description }}</p>
+      <p class="text-success"><strong>Price:</strong> ${{ product.price }}</p>
+      <a
+        href="{{ product.productUrl }}"
+        class="bg-secondary btn text-white"
+        target="_blank"
+        >View Product</a
+      >
+      <button
+        (click)="deleteProduct(product?.id)"
+        class="bg-danger btn text-white mx-2"
+      >
+        Delete
+      </button>
+      <a
+        [routerLink]="['/edit-product', product.id]"
+        class="bg-primary btn text-white mx-2"
+        >Edit</a
+      >
+    </div>
   </div>
+  } @if(products?.length == 0){ No Data to display }
+</div>
